@@ -148,7 +148,7 @@ class ShipTest {
     @DisplayName("Bottom most position stored correctly")
     void getBottomMostPos_bottomIsLast() { //bottom depende de row :)
         ship.positions = Arrays.asList(new Position(1, 1), new Position(3, 1));
-        assertEquals(3, ship.getBottomMostPos(), "Error: expected bottom-most row = 3"); //mudei de 3 para 1 por q 1<3 :/
+        assertEquals(3, ship.getBottomMostPos(), "Error: expected bottom-most row = 3");
         //ship tem pos [(3,1), (1,1)] therefore o maior valor e a da row 3 => (3,1)
     }
 
