@@ -36,6 +36,20 @@ class GalleonTest {
     }
 
     @Test
+    @DisplayName("Construtor quando o campo do bearing esta Null")
+    public void constructor_null() {
+        //assertThrows corre o codigo, e se nao fazer exception/se fizer outra exception da dada resulta no erro
+        NullPointerException ex =  assertThrows(NullPointerException.class,
+                        () -> new Galleon(null, basePos), "Error: expected NullPointerException for null bearing");
+
+        assertTrue(ex.getMessage().contains("invalid bearing"), "Error: expected message to mention invalid bearing");
+
+        //Codigo alternativo:
+//        assertThrows(NullPointerException.class,
+//                () -> new Galleon(null, basePos), "Error: expected NullPointerException for null bearing");
+    }
+
+    @Test
     @DisplayName("Construtor quando galleon aponta North")
     public void constructor_north() {
         g = new Galleon(Compass.NORTH, basePos);
