@@ -13,21 +13,38 @@ public class Carrack extends Ship {
      */
     public Carrack(Compass bearing, IPosition pos) throws IllegalArgumentException {
         super(Carrack.NAME, bearing, pos);
+
         switch (bearing) {
+
             case NORTH:
+                positions.add(new Position(pos.getRow(), pos.getColumn()));
+                positions.add(new Position(pos.getRow() + 1, pos.getColumn()));
+                positions.add(new Position(pos.getRow() + 2, pos.getColumn()));
+                break;
+
             case SOUTH:
-                for (int r = 0; r < SIZE; r++)
-                    getPositions().add(new Position(pos.getRow() + r, pos.getColumn()));
+                positions.add(new Position(pos.getRow(), pos.getColumn()));
+                positions.add(new Position(pos.getRow() - 1, pos.getColumn()));
+                positions.add(new Position(pos.getRow() - 2, pos.getColumn()));
                 break;
+
             case EAST:
-            case WEST:
-                for (int c = 0; c < SIZE; c++)
-                    getPositions().add(new Position(pos.getRow(), pos.getColumn() + c));
+                positions.add(new Position(pos.getRow(), pos.getColumn()));
+                positions.add(new Position(pos.getRow(), pos.getColumn() + 1));
+                positions.add(new Position(pos.getRow(), pos.getColumn() + 2));
                 break;
+
+            case WEST:
+                positions.add(new Position(pos.getRow(), pos.getColumn()));
+                positions.add(new Position(pos.getRow(), pos.getColumn() - 1));
+                positions.add(new Position(pos.getRow(), pos.getColumn() - 2));
+                break;
+
             default:
                 throw new IllegalArgumentException("ERROR! invalid bearing for the carrack");
         }
     }
+
 
     /*
      * (non-Javadoc)
