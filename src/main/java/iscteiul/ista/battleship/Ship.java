@@ -111,7 +111,7 @@ public abstract class Ship implements IShip {
      */
     @Override
     public boolean stillFloating() {
-        for (int i = 0; i < getSize(); i++)
+        for (int i = 0; i < getPositions().size(); i++) //for (int i = 0; i < getSize(); i++)
             if (!getPositions().get(i).isHit())
                 return true;
         return false;
@@ -125,7 +125,7 @@ public abstract class Ship implements IShip {
     @Override
     public int getTopMostPos() {
         int top = getPositions().get(0).getRow();
-        for (int i = 1; i < getSize(); i++)
+        for (int i = 1; i < getPositions().size(); i++) //for (int i = 1; i < getSize(); i++)
             if (getPositions().get(i).getRow() < top)
                 top = getPositions().get(i).getRow();
         return top;
@@ -139,7 +139,7 @@ public abstract class Ship implements IShip {
     @Override
     public int getBottomMostPos() {
         int bottom = getPositions().get(0).getRow();
-        for (int i = 1; i < getSize(); i++)
+        for (int i = 1; i < getPositions().size(); i++) //for (int i = 1; i < getSize(); i++)
             if (getPositions().get(i).getRow() > bottom)
                 bottom = getPositions().get(i).getRow();
         return bottom;
@@ -153,7 +153,7 @@ public abstract class Ship implements IShip {
     @Override
     public int getLeftMostPos() {
         int left = getPositions().get(0).getColumn();
-        for (int i = 1; i < getSize(); i++)
+        for (int i = 1; i < getPositions().size(); i++) //for (int i = 1; i < getSize(); i++)
             if (getPositions().get(i).getColumn() < left)
                 left = getPositions().get(i).getColumn();
         return left;
@@ -167,9 +167,13 @@ public abstract class Ship implements IShip {
     @Override
     public int getRightMostPos() {
         int right = getPositions().get(0).getColumn();
-        for (int i = 1; i < getSize(); i++)
-            if (getPositions().get(i).getColumn() > right)
+
+        //for (int i = 1; i < getSize(); i++) { //getSize estava dar 1 em vez de o tamanho correto
+        for (int i = 1; i < getPositions().size(); i++) {
+            if (getPositions().get(i).getColumn() > right) {
                 right = getPositions().get(i).getColumn();
+            }
+        }
         return right;
     }
 
@@ -182,7 +186,7 @@ public abstract class Ship implements IShip {
     public boolean occupies(IPosition pos) {
         assert pos != null;
 
-        for (int i = 0; i < getSize(); i++)
+        for (int i = 0; i < getPositions().size(); i++) //for (int i = 0; i < getSize(); i++)
             if (getPositions().get(i).equals(pos))
                 return true;
         return false;
@@ -198,9 +202,11 @@ public abstract class Ship implements IShip {
         assert other != null;
 
         Iterator<IPosition> otherPos = other.getPositions().iterator();
-        while (otherPos.hasNext())
-            if (tooCloseTo(otherPos.next()))
+        while (otherPos.hasNext()){
+            if (tooCloseTo(otherPos.next())){
                 return true;
+            }
+        }
 
         return false;
     }
@@ -212,7 +218,7 @@ public abstract class Ship implements IShip {
      */
     @Override
     public boolean tooCloseTo(IPosition pos) {
-        for (int i = 0; i < this.getSize(); i++)
+        for (int i = 0; i < getPositions().size(); i++)
             if (getPositions().get(i).isAdjacentTo(pos))
                 return true;
         return false;
@@ -234,10 +240,13 @@ public abstract class Ship implements IShip {
         }
     }
 
-
     @Override
     public String toString() {
         return "[" + category + " " + bearing + " " + pos + "]";
     }
 
+//    @Override
+//    public Integer getSize() { //mesmo com o override continua a nao ser usado :/
+//        return getPositions().size();
+//    }
 }
