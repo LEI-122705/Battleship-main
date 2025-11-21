@@ -324,6 +324,15 @@ class FleetTest {
             assertTrue(out.contains("MockShip[Caravela]"));
             assertTrue(out.contains("MockShip[Barca]"));
         }
+
+        @Test
+        @DisplayName("printShipsByCategory: lança AssertionError se categoria for null")
+        void printShipsByCategoryNullCategory() {
+            Fleet fleet = new Fleet();
+
+            assertThrows(AssertionError.class,
+                    () -> fleet.printShipsByCategory(null));
+        }
     }
 
     // =====================================================================
