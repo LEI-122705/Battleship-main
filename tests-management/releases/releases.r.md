@@ -3,11 +3,11 @@
 ## Testing checklists
 
 ### S1 Release checklist
-* [unknown] C1 Reports
+* [completed @ConstancaFerreira] C1 Reports
 
 
 ### S2 Automnated tests checklist
-* [unknown] C2 Unit tests
+* [passed @ConstancaFerreira] C2 Unit tests 
 
 
 ## Unit tests
