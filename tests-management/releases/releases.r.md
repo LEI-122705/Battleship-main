@@ -30,7 +30,7 @@
 
 
 ### S4 Tasks test case
-* [unknown] C8 TasksTest
+* [passed @EurisaPatricio] C8 TasksTest
     tags: #unit-tests, #test-cases
 
 
