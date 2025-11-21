@@ -13,19 +13,24 @@
 ## Unit tests
 
 ### S3 Ships test case
-* [unknown] C3 BargeTest
+(@LEI-111088)
+* [passed] C3 BargeTest
     tags: #unit-tests, #test-cases
 
-* [unknown] C4 CaravelTest
+(@LEI-111088)
+* [passed] C4 CaravelTest
     tags: #unit-tests, #test-cases
 
-* [unknown] C5 CarrackTest
+(@LEI-111088)
+* [passed] C5 CarrackTest
     tags: #unit-tests, #test-cases
 
-* [unknown] C6 CompassTest
+(@LEI-111088)
+* [passed] C6 CompassTest
     tags: #unit-tests, #test-cases
 
-* [unknown] C7 GalleonTest
+(@LEI-111088)
+* [passed] C7 GalleonTest
     tags: #unit-tests, #test-cases
 
 
