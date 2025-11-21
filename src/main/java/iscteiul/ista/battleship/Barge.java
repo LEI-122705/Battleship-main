@@ -21,4 +21,5 @@ public class Barge extends Ship {
         return SIZE;
     }
 
+
 }

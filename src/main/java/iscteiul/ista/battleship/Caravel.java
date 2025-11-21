@@ -14,20 +14,28 @@ public class Caravel extends Ship {
     public Caravel(Compass bearing, IPosition pos) throws NullPointerException, IllegalArgumentException {
         super(Caravel.NAME, bearing, pos);
 
-        if (bearing == null)
-            throw new NullPointerException("ERROR! invalid bearing for the caravel");
-
         switch (bearing) {
+
             case NORTH:
+                positions.add(new Position(pos.getRow(), pos.getColumn()));
+                positions.add(new Position(pos.getRow() + 1, pos.getColumn()));
+                break;
+
             case SOUTH:
-                for (int r = 0; r < SIZE; r++)
-                    getPositions().add(new Position(pos.getRow() + r, pos.getColumn()));
+                positions.add(new Position(pos.getRow(), pos.getColumn()));
+                positions.add(new Position(pos.getRow() - 1, pos.getColumn()));
                 break;
+
             case EAST:
-            case WEST:
-                for (int c = 0; c < SIZE; c++)
-                    getPositions().add(new Position(pos.getRow(), pos.getColumn() + c));
+                positions.add(new Position(pos.getRow(), pos.getColumn()));
+                positions.add(new Position(pos.getRow(), pos.getColumn() + 1));
                 break;
+
+            case WEST:
+                positions.add(new Position(pos.getRow(), pos.getColumn()));
+                positions.add(new Position(pos.getRow(), pos.getColumn() - 1));
+                break;
+
             default:
                 throw new IllegalArgumentException("ERROR! invalid bearing for the caravel");
         }
