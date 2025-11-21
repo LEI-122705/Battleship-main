@@ -59,9 +59,12 @@ public abstract class Ship implements IShip {
      */
     public Ship(String category, Compass bearing, IPosition pos) {
         //assert bearing != null; //needs to throw exception to correctly function/trigger test
-        assert pos != null;
+        //assert pos != null;
+        if(pos == null){
+            throw new NullPointerException("ERROR! invalid position for the ship");
+        }
         if (bearing == null){
-            throw new NullPointerException("ERROR! invalid bearing for the galleon");
+            throw new NullPointerException("ERROR! invalid bearing for the ship");
         }
 
         this.category = category;
@@ -127,10 +130,12 @@ public abstract class Ship implements IShip {
      */
     @Override
     public int getTopMostPos() {
-        int top = getPositions().get(0).getRow();
-        for (int i = 1; i < getPositions().size(); i++) //for (int i = 1; i < getSize(); i++)
-            if (getPositions().get(i).getRow() < top)
+        int top= 1000; //int top = getPositions().get(0).getRow();
+        for (int i = 0; i < getPositions().size(); i++) { //for (int i = 1; i < getSize(); i++)
+            if (getPositions().get(i).getRow() < top) {
                 top = getPositions().get(i).getRow();
+            }
+        }
         return top;
     }
 
@@ -141,8 +146,8 @@ public abstract class Ship implements IShip {
      */
     @Override
     public int getBottomMostPos() {
-        int bottom = getPositions().get(0).getRow();
-        for (int i = 1; i < getPositions().size(); i++) //for (int i = 1; i < getSize(); i++)
+        int bottom= -1; //int bottom = getPositions().get(0).getRow();
+        for (int i = 0; i < getPositions().size(); i++) //for (int i = 1; i < getSize(); i++)
             if (getPositions().get(i).getRow() > bottom)
                 bottom = getPositions().get(i).getRow();
         return bottom;
@@ -155,8 +160,8 @@ public abstract class Ship implements IShip {
      */
     @Override
     public int getLeftMostPos() {
-        int left = getPositions().get(0).getColumn();
-        for (int i = 1; i < getPositions().size(); i++) //for (int i = 1; i < getSize(); i++)
+        int left= 1000; //int left = getPositions().get(0).getColumn();
+        for (int i = 0; i < getPositions().size(); i++) //for (int i = 1; i < getSize(); i++)
             if (getPositions().get(i).getColumn() < left)
                 left = getPositions().get(i).getColumn();
         return left;
@@ -169,14 +174,13 @@ public abstract class Ship implements IShip {
      */
     @Override
     public int getRightMostPos() {
-        int right = getPositions().get(0).getColumn();
+        int right= -1; //int right = getPositions().get(0).getColumn();
 
         //for (int i = 1; i < getSize(); i++) { //getSize estava dar 1 em vez de o tamanho correto
-        for (int i = 1; i < getPositions().size(); i++) {
+        for (int i = 0; i < getPositions().size(); i++)
             if (getPositions().get(i).getColumn() > right) {
                 right = getPositions().get(i).getColumn();
             }
-        }
         return right;
     }
 
@@ -187,7 +191,10 @@ public abstract class Ship implements IShip {
      */
     @Override
     public boolean occupies(IPosition pos) {
-        assert pos != null;
+        //assert pos != null;
+        if(pos == null){
+            throw new NullPointerException("ERROR! Invalid position");
+        }
 
         for (int i = 0; i < getPositions().size(); i++) //for (int i = 0; i < getSize(); i++)
             if (getPositions().get(i).equals(pos))
@@ -202,7 +209,10 @@ public abstract class Ship implements IShip {
      */
     @Override
     public boolean tooCloseTo(IShip other) {
-        assert other != null;
+        //assert other != null;
+        if(other == null){
+            throw new NullPointerException("ERROR! Invalid ship");
+        }
 
         Iterator<IPosition> otherPos = other.getPositions().iterator();
         while (otherPos.hasNext()){
@@ -235,7 +245,10 @@ public abstract class Ship implements IShip {
      */
     @Override
     public void shoot(IPosition pos) {
-        assert pos != null;
+        //assert pos != null;
+        if(pos == null){
+            throw new NullPointerException("ERROR! Invalid position");
+        }
 
         for (IPosition position : getPositions()) {
             if (position.equals(pos))
