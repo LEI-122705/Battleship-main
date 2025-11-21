@@ -2,6 +2,5 @@
 
 ## S1 Release checklist
 * C1 Reports
-* 
 ## S2 Automnated tests checklist
 * C2 Unit tests
