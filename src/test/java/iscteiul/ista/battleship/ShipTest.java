@@ -1,10 +1,8 @@
 package iscteiul.ista.battleship;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.DisplayName;
+
+import org.junit.jupiter.api.*;
 
 import java.util.Arrays;
 
@@ -87,93 +85,101 @@ class ShipTest {
         assertTrue(s instanceof Galleon, "Error: expected Galleon instance for 'galeao'");
     }
 
-    @Test
-    @DisplayName("Construtor com categoria invalida")
-    void buildShip_invalidKind() {
-        Ship s= Ship.buildShip("submarine", Compass.NORTH, new Position(1, 1));
-        assertNull(s, "Error: expected null for unknown ship type");
+    @Nested
+    @DisplayName("Valores invalidos para construtores")
+    class InvalidConstructorValues {
+        @Test
+        @DisplayName("Construtor com categoria invalida")
+        void buildShip_invalidKind() {
+            Ship s= Ship.buildShip("submarine", Compass.NORTH, new Position(1, 1));
+            assertNull(s, "Error: expected null for unknown ship type");
+        }
+
+        @Test
+        @DisplayName("Construtor com bearing invalido")
+        public void constructor_invalidBearing() {
+            assertThrows(NullPointerException.class,
+                    () -> Ship.buildShip("barca", null, new Position(1, 1)), "Error: expected to throw NullPointerException for null bearing");
+        }
+
+        @Test
+        @DisplayName("Construtor com posicao invalida")
+        public void constructor_invalidPosition() {
+            assertThrows(NullPointerException.class,
+                    () ->  Ship.buildShip("barca", Compass.NORTH, null), "Error: expected NullPointerException for null position");
+        }
     }
 
-    @Test
-    @DisplayName("Construtor com bearing invalido")
-    public void constructor_invalidBearing() {
-        assertThrows(NullPointerException.class,
-                () -> Ship.buildShip("barca", null, new Position(1, 1)), "Error: expected to throw NullPointerException for null bearing");
-    }
+    @Nested
+    @DisplayName("Testes para getters")
+    class Getters {
+        //testes para getCategory
+        @Test
+        @DisplayName("Correct category: barge")
+        void getCategory_Barge() {
+            Ship s= Ship.buildShip("barca", Compass.NORTH, new Position(1, 1));
+            assertEquals(s.getCategory(), "Barca", "Error: expected 'Barca' for category");
+        }
 
-    @Test
-    @DisplayName("Construtor com posicao invalida")
-    public void constructor_invalidPosition() {
-        assertThrows(NullPointerException.class,
-                () ->  Ship.buildShip("barca", Compass.NORTH, null), "Error: expected NullPointerException for null position");
-    }
+        @Test
+        @DisplayName("Correct category: caravel")
+        void getCategory_Caravel() {
+            Ship s= Ship.buildShip("caravela", Compass.NORTH, new Position(1, 1));
+            assertEquals(s.getCategory(), "Caravela", "Error: expected 'Caravela' for category");
+        }
 
-    //testes para getCategory
-    @Test
-    @DisplayName("Correct category: barge")
-    void getCategory_Barge() {
-        Ship s= Ship.buildShip("barca", Compass.NORTH, new Position(1, 1));
-        assertEquals(s.getCategory(), "Barca", "Error: expected 'Barca' for category");
-    }
+        @Test
+        @DisplayName("Correct category: carrack")
+        void getCategory_Carrack() {
+            Ship s= Ship.buildShip("nau", Compass.NORTH, new Position(1, 1));
+            assertEquals(s.getCategory(), "Nau", "Error: expected 'Nau' for category");
+        }
 
-    @Test
-    @DisplayName("Correct category: caravel")
-    void getCategory_Caravel() {
-        Ship s= Ship.buildShip("caravela", Compass.NORTH, new Position(1, 1));
-        assertEquals(s.getCategory(), "Caravela", "Error: expected 'Caravela' for category");
-    }
+        @Test
+        @DisplayName("Correct category: galleon")
+        void getCategory_Galleon() {
+            Ship s= Ship.buildShip("galeao", Compass.NORTH, new Position(1, 1));
+            assertEquals(s.getCategory(), "Galeao", "Error: expected 'Galeao' for category");
+        }
 
-    @Test
-    @DisplayName("Correct category: carrack")
-    void getCategory_Carrack() {
-        Ship s= Ship.buildShip("nau", Compass.NORTH, new Position(1, 1));
-        assertEquals(s.getCategory(), "Nau", "Error: expected 'Nau' for category");
-    }
+        @Test
+        @DisplayName("Correct category: frigate")
+        void getCategory() {
+            Ship s= Ship.buildShip("fragata", Compass.NORTH, new Position(1, 1));
+            assertEquals(s.getCategory(), "Fragata", "Error: expected 'Fragata' for category");
+        }
 
-    @Test
-    @DisplayName("Correct category: galleon")
-    void getCategory_Galleon() {
-        Ship s= Ship.buildShip("galeao", Compass.NORTH, new Position(1, 1));
-        assertEquals(s.getCategory(), "Galeao", "Error: expected 'Galeao' for category");
-    }
+        //testes para getBearing
+        @Test
+        @DisplayName("Correctly returning bearing")
+        void getBearing() {
+            assertAll("Getting Bearing",
+                    () -> assertTrue(ship.getBearing() instanceof Compass, "Error: Expected to return an object of the type Compass"),
+                    () -> assertEquals(ship.getBearing(), Compass.NORTH, "Error: Expected to return Compass.NORTH")
+            );
+        }
 
-    @Test
-    @DisplayName("Correct category: frigate")
-    void getCategory() {
-        Ship s= Ship.buildShip("fragata", Compass.NORTH, new Position(1, 1));
-        assertEquals(s.getCategory(), "Fragata", "Error: expected 'Fragata' for category");
-    }
+        //testes para getPosition e getPositions
+        @Test
+        @DisplayName("Checking correct position returned")
+        void getPosition(){
+            assertEquals(ship.getPosition(), basePos, "Error: Incorrect position returned");
+        }
 
-    //testes para getBearing
-    @Test
-    @DisplayName("Correctly returning bearing")
-    void getBearing() {
-        assertAll("Getting Bearing",
-                () -> assertTrue(ship.getBearing() instanceof Compass, "Error: Expected to return an object of the type Compass"),
-                () -> assertEquals(ship.getBearing(), Compass.NORTH, "Error: Expected to return Compass.NORTH")
-        );
-    }
-
-    //testes para getPosition e getPositions
-    @Test
-    @DisplayName("Checking correct position returned")
-    void getPosition(){
-        assertEquals(ship.getPosition(), basePos, "Error: Incorrect position returned");
-    }
-
-    @Test
-    @DisplayName("Checking correct list of positions returned")
-    void getPositions(){
-        assertAll("Checking correct list of positions returned",
-                () -> assertEquals(ship.getPositions().size(), 3,
-                        "Error: Expected 3 positions to be stored"),
-                () -> assertEquals(ship.getPositions().get(0), new Position(3, 3),
-                        "Error: Expected position (3,3) to be stored at index 0"),
-                () -> assertEquals(ship.getPositions().get(1), new Position(3, 4),
-                        "Error: Expected position (3,4) to be stored at index 1"),
-                () -> assertEquals(ship.getPositions().get(2), new Position(3, 5),
-                        "Error: Expected position (3,5) to be stored at index 2")
-        );
+        @Test
+        @DisplayName("Checking correct list of positions returned")
+        void getPositions(){
+            assertAll("Checking correct list of positions returned",
+                    () -> assertEquals(ship.getPositions().size(), 3,
+                            "Error: Expected 3 positions to be stored"),
+                    () -> assertEquals(ship.getPositions().get(0), new Position(3, 3),
+                            "Error: Expected position (3,3) to be stored at index 0"),
+                    () -> assertEquals(ship.getPositions().get(1), new Position(3, 4),
+                            "Error: Expected position (3,4) to be stored at index 1"),
+                    () -> assertEquals(ship.getPositions().get(2), new Position(3, 5),
+                            "Error: Expected position (3,5) to be stored at index 2")
+            );
+        }
     }
 
     //testes para still floating
@@ -263,13 +269,6 @@ class ShipTest {
         assertFalse(ship.occupies(target), "Error: expected ship not to occupy (10,10)");
     }
 
-    @Test
-    @DisplayName("Throw exception when occupying null position")
-    void occupies_nullPosition(){
-        assertThrows(NullPointerException.class,
-                () -> ship.occupies(null), "Error: expected NullPointerException when null position is passed");
-    }
-
     //testes para tooCloseto baseado num barco
     @Test
     @DisplayName("Confirming ships are too close to each other")
@@ -286,13 +285,6 @@ class ShipTest {
         Ship other = new Barge(Compass.NORTH, new Position(10, 10));
         other.positions = Arrays.asList(new Position(10, 10));
         assertFalse(ship.tooCloseTo(other), "Error: ships should not be too close when distant");
-    }
-
-    @Test
-    @DisplayName("Throw exception when checking if close to null ship")
-    void tooCloseToShip_nullShip(){
-        assertThrows(NullPointerException.class,
-                () -> ship.tooCloseTo((IShip) null), "Error: expected NullPointerException when null ship is passed");
     }
 
     //testes para tooCloseto baseado numa posicao
@@ -328,13 +320,6 @@ class ShipTest {
         assertFalse(anyHit, "Error: no position should be hit for a missed shot");
     }
 
-    @Test
-    @DisplayName("Throw exception when shooting null position")
-    void shoot_nullPosition(){
-        assertThrows(NullPointerException.class,
-                () -> ship.shoot(null), "Error: expected NullPointerException when null position is passed");
-    }
-
     //testes para toString
     @Test
     @DisplayName("Confirming correct format for toString")
@@ -344,5 +329,30 @@ class ShipTest {
         //alterei condicao para nao ser tao "case sensitive"
         assertTrue(str.contains("Barca") || str.contains("barca") || str.contains("Barge") || str.contains("barge"),
                 "Error: toString should contain category name");
+    }
+
+    @Nested
+    @DisplayName("Testes para null values")
+    class NullValues {
+        @Test //test for occupies()
+        @DisplayName("Throw exception when occupying null position")
+        void occupies_nullPosition(){
+            assertThrows(NullPointerException.class,
+                    () -> ship.occupies(null), "Error: expected NullPointerException when null position is passed");
+        }
+
+        @Test //test for tooCloseTo()
+        @DisplayName("Throw exception when checking if close to null ship")
+        void tooCloseToShip_nullShip(){
+            assertThrows(NullPointerException.class,
+                    () -> ship.tooCloseTo((IShip) null), "Error: expected NullPointerException when null ship is passed");
+        }
+
+        @Test
+        @DisplayName("Throw exception when shooting null position")
+        void shoot_nullPosition(){
+            assertThrows(NullPointerException.class,
+                    () -> ship.shoot(null), "Error: expected NullPointerException when null position is passed");
+        }
     }
 }
